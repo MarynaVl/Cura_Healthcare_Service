@@ -27,31 +27,22 @@ class PageLogin:
         expected_url = self.base_url + '/profile.php#profile'
         WebDriverWait(self.driver, timeout=5).until(ec.url_changes(expected_url))
 
-    def set_username_login(self, case: str) -> None:
+    def set_login_data(self, case: str) -> None:
         with open('../../data/user.json', 'r') as file:
             data = json.load(file)
         for user_case in data:
             if user_case.get('credential') == case:
-                valid_username = user_case['username']
+                username = user_case['username']
+                password = user_case['password']
                 break
         else:
-            raise ValueError('Valid user not found in the JSON user data.')
+            raise ValueError('Data not found in the JSON user data.')
         username_field = self.driver.find_element(*self.username_loc)
         username_field.clear()
-        username_field.send_keys(valid_username)
-
-    def set_password_login(self, case: str) -> None:
-        with open('../../data/user.json', 'r') as file:
-            data = json.load(file)
-        for user_case in data:
-            if user_case.get('credential') == case:
-                valid_password = user_case['password']
-                break
-        else:
-            raise ValueError('Valid user case not found in the JSON user data.')
+        username_field.send_keys(username)
         password_field = self.driver.find_element(*self.password_loc)
         password_field.clear()
-        password_field.send_keys(valid_password)
+        password_field.send_keys(password)
 
     def submit_login(self):
         submit_btn = self.driver.find_element(*self.login_btn_loc)
