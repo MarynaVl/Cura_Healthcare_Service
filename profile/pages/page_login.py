@@ -16,6 +16,7 @@ class PageLogin:
         self.username_loc = (By.ID, 'txt-username')
         self.password_loc = (By.ID, 'txt-password')
         self.login_btn_loc = (By.ID, 'btn-login')
+        self.error_message_loc = (By.CSS_SELECTOR, '.text-danger')
 
     def open(self) -> None:
         self.driver.get(self.base_url)
@@ -26,11 +27,11 @@ class PageLogin:
         expected_url = self.base_url + '/profile.php#profile'
         WebDriverWait(self.driver, timeout=5).until(ec.url_changes(expected_url))
 
-    def set_username_login(self):
+    def set_username_login(self, case: str) -> None:
         with open('../../data/user.json', 'r') as file:
             data = json.load(file)
         for user_case in data:
-            if user_case.get('credential') == 'valid user credential':
+            if user_case.get('credential') == case:
                 valid_username = user_case['username']
                 break
         else:
@@ -39,11 +40,11 @@ class PageLogin:
         username_field.clear()
         username_field.send_keys(valid_username)
 
-    def set_password_login(self):
+    def set_password_login(self, case: str) -> None:
         with open('../../data/user.json', 'r') as file:
             data = json.load(file)
         for user_case in data:
-            if user_case.get('credential') == 'valid user credential':
+            if user_case.get('credential') == case:
                 valid_password = user_case['password']
                 break
         else:
@@ -55,3 +56,7 @@ class PageLogin:
     def submit_login(self):
         submit_btn = self.driver.find_element(*self.login_btn_loc)
         submit_btn.click()
+
+    def get_login_error(self) -> str:
+        error_field = self.driver.find_element(*self.error_message_loc)
+        return error_field.text
