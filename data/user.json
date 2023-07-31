@@ -1,0 +1,16 @@
+[
+  {
+    "credential": "valid user credential",
+    "username": "John Doe",
+    "password": "ThisIsNotAPassword",
+    "url": "/profile.php#login",
+    "hasError": false
+    },
+  {
+     "credential": "invalid username",
+     "username": "John Dart",
+     "password": "ThisIsNotAPassword",
+     "url": "/profile.php#login",
+     "hasError": true
+    }
+]
