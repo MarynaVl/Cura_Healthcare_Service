@@ -1,0 +1,42 @@
+[
+  {
+    "info": "appointment without hospital readmission",
+    "facility": "Seoul CURA Healthcare Center",
+    "hospitalReadmission": "No",
+    "healthcareProgram": "Medicare",
+    "date": "17/01/2023",
+    "comment": "Just second common test case",
+    "booked": true,
+    "url": "/appointment.php#summary"
+  },
+  {
+    "info": "appointment with hospital readmission",
+    "facility": "Tokyo CURA Healthcare Center",
+    "hospitalReadmission": "Yes",
+    "healthcareProgram": "Medicaid",
+    "date": "04/01/2023",
+    "comment": "Just first common test case",
+    "booked": true,
+    "url": "/appointment.php#summary"
+  },
+  {
+    "info": "empty date field",
+    "facility": "Seoul CURA Healthcare Center",
+    "hospitalReadmission": "Yes",
+    "healthcareProgram": "Medicaid",
+    "date": "",
+    "comment": "Just first common test case",
+    "booked": false,
+    "url": "/#appointment"
+  },
+  {
+    "info": "valid form",
+    "facility": "Hongkong CURA Healthcare Center",
+    "hospitalReadmission": "No",
+    "healthcareProgram": "None",
+    "date": "25/02/2023",
+    "comment": "Just third common test case",
+    "booked": true,
+    "url": "/appointment.php#summary"
+  }
+]
