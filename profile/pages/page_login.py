@@ -4,14 +4,15 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from config import Config
+from locators import CommonLocators
 
 
 class PageLogin:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
-        self.sidebar_menu_loc = (By.XPATH, '//i[contains(@class, "fa-bars")]')
-        self.sidebar_login_loc = (By.XPATH, '//a[text()="Login"]')
+        self.sidebar_menu_loc = CommonLocators.SIDEBAR_MENU
+        self.sidebar_login_loc = CommonLocators.SIDEBAR_LOGIN
         self.username_loc = (By.ID, 'txt-username')
         self.password_loc = (By.ID, 'txt-password')
         self.login_btn_loc = (By.ID, 'btn-login')
