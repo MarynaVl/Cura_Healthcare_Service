@@ -1,6 +1,7 @@
 import pytest
 
 from profile.pages.page_login import PageLogin
+from config import Config
 
 
 @pytest.mark.usefixtures('chrome')
@@ -11,7 +12,7 @@ class TestLogin:
         page.open()
         page.set_login_data('valid user credential')
         page.submit_login()
-        expected_url = page.base_url + '/#appointment'
+        expected_url = Config.BASE_URL + '/#appointment'
         assert expected_url == self.driver.current_url, 'Login was not successful.'
 
     def test_login_with_invalid_username(self):

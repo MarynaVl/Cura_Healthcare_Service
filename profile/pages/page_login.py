@@ -3,11 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from config import Config
 
 
 class PageLogin:
-
-    base_url = 'https://katalon-demo-cura.herokuapp.com'
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
@@ -19,12 +18,12 @@ class PageLogin:
         self.error_message_loc = (By.CSS_SELECTOR, '.text-danger')
 
     def open(self) -> None:
-        self.driver.get(self.base_url)
+        self.driver.get(Config.BASE_URL)
         sidebar_menu_btn = self.driver.find_element(*self.sidebar_menu_loc)
         sidebar_menu_btn.click()
         sidebar_login_btn = self.driver.find_element(*self.sidebar_login_loc)
         sidebar_login_btn.click()
-        expected_url = self.base_url + '/profile.php#profile'
+        expected_url = Config.BASE_URL + '/profile.php#profile'
         WebDriverWait(self.driver, timeout=5).until(ec.url_changes(expected_url))
 
     def set_login_data(self, case: str) -> None:
