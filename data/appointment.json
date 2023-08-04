@@ -6,8 +6,7 @@
     "healthcareProgram": "Medicare",
     "date": "10/08/2023",
     "comment": "Test appointment without hospital readmission",
-    "booked": true,
-    "url": "/appointment.php#summary"
+    "booked": true
   },
   {
     "info": "appointment with hospital readmission",
@@ -16,18 +15,16 @@
     "healthcareProgram": "Medicaid",
     "date": "24/08/2023",
     "comment": "Test appointment with hospital readmission",
-    "booked": true,
-    "url": "/appointment.php#summary"
+    "booked": true
   },
   {
     "info": "appointment with min data",
     "facility": "Hongkong CURA Healthcare Center",
     "hospitalReadmission": "No",
     "healthcareProgram": "None",
-    "date": "current day",
+    "date": "01/09/2023",
     "comment": "",
-    "booked": true,
-    "url": "/appointment.php#summary"
+    "booked": true
   },
   {
     "info": "empty date field",
@@ -36,7 +33,6 @@
     "healthcareProgram": "Medicaid",
     "date": "",
     "comment": "Test appointment with empty date field",
-    "booked": false,
-    "url": "/#appointment"
+    "booked": false
   }
 ]
