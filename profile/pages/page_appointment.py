@@ -27,6 +27,26 @@ class PageAppointment:
         self.booked_visit_date_loc = (By.CSS_SELECTOR, 'p#visit_date')
         self.booked_comment_loc = (By.CSS_SELECTOR, 'p#comment')
 
+    @staticmethod
+    def read_appointment_data(case_name: str) -> dict:
+        with open('../../data/appointment.json', 'r') as file:
+            data = json.load(file)
+        for case in data:
+            if case.get('info') == case_name:
+                return {
+                    'facility': case['facility'],
+                    'hospital_readmission': case['hospitalReadmission'],
+                    'healthcare_program': case['healthcareProgram'],
+                    'visit_date': case['date'],
+                    'comment': case['comment']
+                }
+        else:
+            raise ValueError('Data not found in the JSON appointment data.')
+
+    @staticmethod
+    def assert_equal(actual, expected, message=None):
+        assert actual == expected, f"{message}: expected '{expected}', but got '{actual}'"
+
     def select_facility(self, value: str) -> None:
         facility_field_select = Select(self.driver.find_element(*self.facility_loc))
         facility_field_select.select_by_value(value)
@@ -55,22 +75,6 @@ class PageAppointment:
     def submit_appointment(self):
         submit_btn = self.driver.find_element(*self.book_appointment_loc)
         submit_btn.click()
-
-    @staticmethod
-    def read_appointment_data(case_name: str) -> dict:
-        with open('../../data/appointment.json', 'r') as file:
-            data = json.load(file)
-        for case in data:
-            if case.get('info') == case_name:
-                return {
-                    'facility': case['facility'],
-                    'hospital_readmission': case['hospitalReadmission'],
-                    'healthcare_program': case['healthcareProgram'],
-                    'visit_date': case['date'],
-                    'comment': case['comment']
-                }
-        else:
-            raise ValueError('Data not found in the JSON appointment data.')
 
     def set_appointment_data(self, case_name: str) -> None:
         data = self.read_appointment_data(case_name)

@@ -13,7 +13,7 @@ class TestAppointment:
         page.set_appointment_data('appointment without hospital readmission')
         page.submit_appointment()
         confirmation_msg = page.get_confirmation_msg()
-        assert confirmation_msg == 'Appointment Confirmation'
+        page.assert_equal(confirmation_msg, 'Appointment Confirmation', 'Messages mismatch')
 
     def test_appointment_with_hosp_readmission(self):
         case = 'appointment with hospital readmission'
@@ -31,8 +31,7 @@ class TestAppointment:
         for field, method in fields_to_check:
             actual_value = getattr(page, method)()
             expected_value = data[field]
-            assert actual_value == expected_value, \
-                f"{field} mismatch. Expected '{expected_value}', but got '{actual_value}'"
+            page.assert_equal(actual_value, expected_value, f'{field} mismatch.')
 
     def test_appointment_without_hosp_readmission(self):
         case = 'appointment without hospital readmission'
@@ -50,8 +49,7 @@ class TestAppointment:
         for field, method in fields_to_check:
             actual_value = getattr(page, method)()
             expected_value = data[field]
-            assert actual_value == expected_value, \
-                f"{field} mismatch. Expected '{expected_value}', but got '{actual_value}'"
+            page.assert_equal(actual_value, expected_value, f'{field} mismatch.')
 
     def test_appointment_min(self):
         case = 'appointment with min data'
@@ -69,8 +67,7 @@ class TestAppointment:
         for field, method in fields_to_check:
             actual_value = getattr(page, method)()
             expected_value = data[field]
-            assert actual_value == expected_value, \
-                f"{field} mismatch. Expected '{expected_value}', but got '{actual_value}'"
+            page.assert_equal(actual_value, expected_value, f'{field} mismatch.')
 
     def test_appointment_negative(self):
         page = PageAppointment(self.driver)
@@ -81,4 +78,4 @@ class TestAppointment:
         assert error_msg in expected_error_messages, f"Expected one of {expected_error_messages}, but got '{error_msg}'"
         expected_url = page.URL
         current_url = self.driver.current_url
-        assert expected_url == current_url, f"Expected URL '{expected_url}', but got '{self.driver.current_url}'"
+        page.assert_equal(current_url, expected_url, 'URL mismatch')
