@@ -7,7 +7,6 @@ from history.pages.page_history import PageHistory
 @pytest.mark.usefixtures('authentication')
 class TestHistory:
 
-    @pytest.mark.smoke
     def test_make_appointment_from_history_page(self):
         page = PageHistory(self.driver)
         page.open_history()
