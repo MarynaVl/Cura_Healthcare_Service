@@ -1,6 +1,6 @@
 import pytest
 
-from profile.pages.page_appointment import PageAppointment
+from user_profile.pages.page_appointment import PageAppointment
 
 
 @pytest.mark.usefixtures('chrome')

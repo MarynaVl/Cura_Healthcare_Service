@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import pytest
 
-from profile.pages.page_login import PageLogin
+from user_profile.pages.page_login import PageLogin
 
 
 @pytest.fixture(scope='class')

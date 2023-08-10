@@ -3,7 +3,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from config import Config
 from locators import CommonLocators
-from profile.pages.page_appointment import PageAppointment
+from user_profile.pages.page_appointment import PageAppointment
 
 
 class PageHistory(PageAppointment):

@@ -1,7 +1,7 @@
 import pytest
 
-from profile.pages.page_login import PageLogin
 from config import Config
+from user_profile.pages.page_login import PageLogin
 
 
 @pytest.mark.usefixtures('chrome')

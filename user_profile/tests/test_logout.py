@@ -3,7 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 from config import Config
-from profile.pages.page_logout import PageLogout
+from user_profile.pages.page_logout import PageLogout
 
 
 @pytest.mark.usefixtures('chrome')
