@@ -1,4 +1,6 @@
 from selenium.webdriver.remote.webdriver import WebDriver
+
+from helpers import WaitHelper
 from locators import CommonLocators
 
 
@@ -6,6 +8,7 @@ class PageLogout:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        self.wait_helper = WaitHelper(driver)
         self.sidebar_menu_loc = CommonLocators.SIDEBAR_MENU
         self.sidebar_logout_loc = CommonLocators.SIDEBAR_LOGOUT
 

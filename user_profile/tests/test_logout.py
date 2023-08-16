@@ -1,6 +1,4 @@
 import pytest
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 
 from config import Config
 from user_profile.pages.page_logout import PageLogout
@@ -14,5 +12,4 @@ class TestLogout:
         page = PageLogout(self.driver)
         page.sidebar_logout()
         expected_url = Config.BASE_URL
-        wait = WebDriverWait(self.driver, 5)
-        wait.until(ec.url_matches(expected_url), 'Logout was not successful.')
+        assert expected_url == self.driver.current_url.rstrip('/'), 'Logout was not successful.'

@@ -14,4 +14,4 @@ class TestHome:
         page.set_appointment_data(case)
         page.submit_appointment()
         confirmation_msg = page.get_confirmation_msg()
-        page.assert_equal(confirmation_msg, 'Appointment Confirmation', 'Messages mismatch')
+        page.page_helper.assert_equal(confirmation_msg, 'Appointment Confirmation', 'Messages mismatch')

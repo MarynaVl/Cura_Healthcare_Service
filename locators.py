@@ -8,3 +8,4 @@ class CommonLocators:
     SIDEBAR_HISTORY = (By.XPATH, '//a[text()="History"]')
     SIDEBAR_PROFILE = (By.XPATH, '//a[text()="Profile"]')
     SIDEBAR_LOGOUT = (By.XPATH, '//a[text()="Logout"]')
+    MAKE_APPOINTMENT_BTN = (By.ID, 'btn-make-appointment')

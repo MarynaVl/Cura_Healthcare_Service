@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from config import Config
+from helpers import PageHelpers
 from locators import CommonLocators
 from user_profile.pages.page_appointment import PageAppointment
 
@@ -11,6 +12,7 @@ class PageHome(PageAppointment):
 
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
+        self.page_helper = PageHelpers(driver)
         self.sidebar_menu_loc = CommonLocators.SIDEBAR_MENU
         self.sidebar_home_loc = CommonLocators.SIDEBAR_HOME
 

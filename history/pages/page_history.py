@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from config import Config
+from helpers import PageHelpers
 from locators import CommonLocators
 from user_profile.pages.page_appointment import PageAppointment
 
@@ -12,9 +13,10 @@ class PageHistory(PageAppointment):
 
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
+        self.page_helper = PageHelpers(driver)
         self.sidebar_menu_loc = CommonLocators.SIDEBAR_MENU
         self.sidebar_history_loc = CommonLocators.SIDEBAR_HISTORY
-        self.make_appointment_loc = (By.ID, 'btn-make-appointment')
+        self.make_appointment_loc = CommonLocators.MAKE_APPOINTMENT_BTN
         self.history_panel_xpath = '//div[@class="panel-heading"][.="{}"]'
         self.history_appointment_xpath = '//ancestor::div[contains(@class, "panel")]//p[@id="{}"]'
         self.history_facility_id = 'facility'

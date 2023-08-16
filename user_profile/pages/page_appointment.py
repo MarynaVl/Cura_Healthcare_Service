@@ -1,11 +1,11 @@
-import json
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 
+from helpers import WaitHelper, PageHelpers
 from config import Config
+from locators import CommonLocators
 
 
 class PageAppointment:
@@ -14,6 +14,10 @@ class PageAppointment:
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
+        self.wait_helper = WaitHelper(driver)
+        self.page_helper = PageHelpers(driver)
+        self.make_appointment_loc = CommonLocators.MAKE_APPOINTMENT_BTN
+        self.appointment_form_loc = (By.CSS_SELECTOR, '.form-horizontal')
         self.facility_loc = (By.ID, 'combo_facility')
         self.hospital_readmission_loc = (By.ID, 'chk_hospotal_readmission')
         self.healthcare_program_xpath = '//input[@id="radio_program_{}"]'
@@ -27,27 +31,27 @@ class PageAppointment:
         self.booked_visit_date_loc = (By.CSS_SELECTOR, 'p#visit_date')
         self.booked_comment_loc = (By.CSS_SELECTOR, 'p#comment')
 
-    @staticmethod
-    def read_appointment_data(case_name: str) -> dict:
-        with open('../../data/appointment.json', 'r') as file:
-            data = json.load(file)
-        for case in data:
-            if case.get('info') == case_name:
-                return {
-                    'facility': case['facility'],
-                    'hospital_readmission': case['hospitalReadmission'],
-                    'healthcare_program': case['healthcareProgram'],
-                    'visit_date': case['date'],
-                    'comment': case['comment']
-                }
-        else:
-            raise ValueError('Data not found in the JSON appointment data.')
+    def click_make_appointment(self):
+        appointment_btn = self.driver.find_element(*self.make_appointment_loc)
+        appointment_btn.click()
 
-    @staticmethod
-    def assert_equal(actual, expected, message=None):
-        assert actual == expected, f"{message}: expected '{expected}', but got '{actual}'"
+    def ensure_correct_page(self, expected_url):
+        try:
+            if self.driver.current_url != expected_url:
+                self.click_make_appointment()
+                self.wait_helper.wait_for_presence(self.appointment_form_loc)
+        except NoSuchElementException:
+            pass  # Ignore the error if the element is not found
+
+    def is_appointment_form_displayed(self):
+        try:
+            form_element = self.driver.find_element(*self.appointment_form_loc)
+            return form_element.is_displayed()
+        except NoSuchElementException:
+            return False
 
     def select_facility(self, value: str) -> None:
+        self.wait_helper.wait_for_visibility(self.facility_loc)
         facility_field_select = Select(self.driver.find_element(*self.facility_loc))
         facility_field_select.select_by_value(value)
 
@@ -77,7 +81,7 @@ class PageAppointment:
         submit_btn.click()
 
     def set_appointment_data(self, case_name: str) -> None:
-        data = self.read_appointment_data(case_name)
+        data = self.page_helper.read_appointment_data(case_name)
         self.select_facility(data['facility'])
         self.check_hospital_readmission(data['hospital_readmission'])
         self.check_healthcare_program(data['healthcare_program'])
@@ -109,6 +113,6 @@ class PageAppointment:
         return comment.text
 
     def get_date_error_msg(self) -> str:
-        date_error = WebDriverWait(self.driver, 5).until(ec.element_to_be_clickable(self.visit_date_loc))
+        date_error = self.wait_helper.wait_for_clickable(self.visit_date_loc)
         error_msg = date_error.get_attribute('validationMessage')
         return error_msg
